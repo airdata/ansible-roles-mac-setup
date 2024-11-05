@@ -1,5 +1,5 @@
 ---
-# - import_playbook: bootstrap-playbook.yml
+- import_playbook: bootstrap-playbook.yml
 
 - name: Setup
   hosts: localhost
@@ -14,10 +14,10 @@
     - vars/ports.yml
     - vars/versions.yml
   tasks:
-    # - name: Install python modules
-    #   import_tasks: tasks/pip.yml
-    #   tags:
-    #     - pip
+    - name: Install python modules
+      import_tasks: tasks/pip.yml
+      tags:
+        - pip
 
     - name: Install ports
       import_tasks: tasks/install_ports.yml
@@ -32,6 +32,11 @@
             - tex
       tags:
         - tex
+
+    - name: Install Applications
+      import_tasks: tasks/install_apps.yml
+      tags:
+        - apps
 
     - name: Install node.js with nvm
       include_role:
@@ -51,7 +56,7 @@
 
     - name: Clone dotfiles
       git:
-        repo: git@github.com:moabukar/dotfiles.git
+        repo: git@github.com:conleym/dotfiles.git
         dest: "{{  '~/.cfg' | expanduser }}"
         bare: true
       tags:
@@ -64,26 +69,40 @@
 
     - name: Clone .emacs.d
       git:
-        repo: git@github.com:moabukar/dot-emacs.git
+        repo: git@github.com:conleym/dot-emacs.git
         dest: "{{ '~/.emacs.d' | expanduser }}"
       tags:
         - emacs
         - dotfiles
 
-    # - name: Install Emacs
-    #   include_role:
-    #     name: emacs
-    #     apply:
-    #       tags:
-    #         - emacs
-    #   tags:
-    #     - emacs
-
-    - name: Install dotfiles
+    - name: Install Emacs
       include_role:
-        name: dotfiles
+        name: emacs
         apply:
           tags:
-            - dotfiles
+            - emacs
       tags:
-        - tex
+        - emacs
+
+    - import_tasks: tasks/launchd_load.yml
+      tags:
+        - launchd
+
+    - import_tasks: tasks/customize.yml
+      tags:
+        - customize
+
+    - import_tasks: tasks/ssh_setup.yml
+      tags:
+        - dotfiles
+
+    - include_role:
+        name: install_fonts_from_archive
+        apply:
+          tags:
+            - fonts
+      vars:
+        font_archive_url: "{{ item }}"
+      loop: "{{ font_archives }}"
+      tags:
+        - fonts

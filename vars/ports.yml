@@ -6,10 +6,9 @@ bootstrap_ports_to_install:
 # List of ports with optional variants _not_ installed in bootstrap.
 ports_to_install:
     autoconf:
-    autossh:
     bash:
     bash-completion:
-    # bat:  # messes up less, so no good.
+#    bat:  # messes up less, so no good.
     bison:
     coreutils:
     cowsay:
@@ -18,7 +17,9 @@ ports_to_install:
     gawk: +mpfr
     gmake:
     gmp: +native
-    # Graphviz
+    gradle:
+    gradle-completion:
+# Graphviz
     # Graphviz requires this to build, apparently, but doesn't install it first.
     swig-python:
     # Install this explicitly first. It seems like graphviz is applying its own variants to this dependency,
@@ -26,11 +27,14 @@ ports_to_install:
     librsvg: +quartz
     graphviz: +guile +pangocairo +poppler +rsvg +x11
     graphviz-gui:
-    # End Graphviz
+# End Graphviz
     gwhich:
     gzip:
     htop:
+    hunspell:
+    ImageMagick: +graphviz +pango +svrg +wmf +x11
     # needed for native json support in emacs.
+    jansson:
     jq:
     lesspipe:
     multimarkdown:
@@ -51,15 +55,18 @@ ports_to_install:
     trash:
     tree:
     # Required for new emacs parsing fanciness.
+    tree-sitter:
     util-linux:
     watch:
     wget: +gnutls
     zsh:
     zsh-completions:
-    # Work
+# Work
+    aws-vault:
     ffmpeg: +nonfree +x11 +gpl3
     portaudio:
     redis:
+    sox:
 # End Work.
 
 # Mapping of port group to specific implementation to select.

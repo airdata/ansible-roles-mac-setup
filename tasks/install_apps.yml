@@ -1,0 +1,57 @@
+---
+- name: Install Postman
+  include_role:
+    name: postman
+
+- name: Install iTerm2
+  include_role:
+    name: iterm2
+- name: Install iTerm2 shell integration for zsh
+  include_role:
+    name: iterm2_shell_integration
+
+- name: Install xACT
+  include_role:
+    name: xact
+
+- name: Install Terraform
+  include_role:
+    name: terraform
+
+- name: Install steamcmd
+  include_role:
+    name: steamcmd
+
+- name: Install ngrok
+  include_role:
+    name: ngrok
+
+- name: Install R
+  include_role:
+    name: r_app
+
+- name: Install AWS CLI
+  include_role:
+    name: aws_cli
+
+- name: Download and install app from disk images
+  include_role:
+    name: install_from_dmg
+  vars:
+    dmg_url: "{{ item.dmg_url }}"
+    dmg_destination: "{{ downloads }}/{{ item.app_name }}.dmg"
+    dmg_checksum: "{{ item.checksum | default(None) }}"
+    app_name: "{{ item.app_name }}"
+    # default(omit) doesn't work here, annoyingly
+    path_to_stat: "{{ item.path_to_stat | default(None) }}"
+    install_method: "{{ item.install_method | default('cp') }}"
+  loop: "{{ dmgs_to_download_and_install }}"
+
+- name: List installed apps
+  command: /opt/local/bin/mas list
+  register: mas_list_stdout
+
+- name: Install AppStore apps
+  command: /opt/local/bin/mas install "{{ item }}"
+  loop: "{{ mas_apps_to_install }}"
+  when: (item | string) not in mas_list_stdout.stdout

@@ -1,0 +1,93 @@
+# Some settings gleaned from, among other sources,
+# https://github.com/mathiasbynens/dotfiles/blob/master/.macos
+# https://github.com/geerlingguy/dotfiles/blob/master/.osx
+# and, of course, the original
+# https://gist.github.com/brandonb927/3195465#file-osx-for-hackers-sh
+---
+- name: Close system preferences
+  command: osascript -e 'tell application "System Preferences" to quit'
+
+- name: Use dark interface style
+  osx_defaults:
+    key: AppleInterfaceStyle
+    type: string
+    value: Dark
+
+- name: Disable "Natural" (backwards) scrolling
+  osx_defaults:
+    # No, that's not a typo. It really is a global property with this name.
+    key: com.apple.swipescrolldirection
+    type: bool
+    value: false
+
+
+- name: Dock -- autohide the Dock
+  osx_defaults:
+    domain: com.apple.dock
+    key: autohide
+    type: bool
+    value: true
+  notify: restart dock
+
+- name: Dock -- minimize windows to Dock icon
+  osx_defaults:
+    domain: com.apple.dock
+    key: minimize-to-application
+    type: bool
+    value: true
+  notify: restart dock
+
+
+- name: Finder -- show all file extensions
+  osx_defaults:
+    key: AppleShowAllExtensions
+    type: bool
+    value: true
+  notify: restart finder
+
+- name: Finder -- disable warning when changing file extensions
+  osx_defaults:
+    domain: com.apple.finder
+    key: FXEnableExtensionChangeWarning
+    type: bool
+    value: false
+  notify: restart finder
+
+- name: Finder -- show path bar
+  osx_defaults:
+    domain: com.apple.finder
+    key: ShowPathbar
+    type: bool
+    value: true
+  notify: restart finder
+
+- name: Finder -- show status bar
+  osx_defaults:
+    domain: com.apple.finder
+    key: ShowStatusBar
+    type: bool
+    value: true
+  notify: restart finder
+
+
+# You'll have to restart safari for it to pick these changes up.
+- name: Safari -- disable opening of safe downloads on completion
+  osx_defaults:
+    domain: com.apple.Safari
+    key: AutoOpenSafeDownloads
+    type: bool
+    value: false
+
+- name: Safari -- show the URL
+  osx_defaults:
+    domain: com.apple.Safari
+    key: ShowFullURLInSmartSearchField
+    type: bool
+    value: true
+
+- name: Safari -- enable debug menu
+  osx_defaults:
+    domain: com.apple.Safari
+    key: IncludeInternalDebugMenu
+    type: bool
+    value: true

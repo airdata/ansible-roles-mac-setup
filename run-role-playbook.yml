@@ -1,0 +1,25 @@
+# Run a single role. Useful for ad hoc testing.
+#
+# Usage: ansible-playbook run-role-playbook.yml -e 'role=<role to execute>'
+---
+- name: Bootstrap
+  hosts: localhost
+  become: false
+  vars_files:
+    - vars/const.yml
+    - vars/dmgs.yml
+    - vars/fonts.yml
+    - vars/launchd.yml
+    - vars/mas.yml
+    - vars/pip.yml
+    - vars/ports.yml
+    - vars/versions.yml
+  tasks:
+    - import_tasks: tasks/preliminaries.yml
+
+    - fail:
+        msg: "Extra var 'role' must have a value. Use -e role=<role to execute> to execute a role."
+      when: role is not defined
+
+    - include_role:
+        name: "{{ role }}"
