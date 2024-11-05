@@ -33,11 +33,6 @@
       tags:
         - tex
 
-    - name: Install Applications
-      import_tasks: tasks/install_apps.yml
-      tags:
-        - apps
-
     - name: Install node.js with nvm
       include_role:
         name: node
