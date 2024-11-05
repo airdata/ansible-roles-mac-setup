@@ -1,0 +1,25 @@
+---
+- name: Configure host.
+  hosts: all
+
+  vars_files:
+    - default.config.yml
+
+  pre_tasks:
+    - name: Include playbook configuration.
+      include_vars: "{{ item }}"
+      with_fileglob:
+        - "{{ playbook_dir }}/config.yml"
+      tags: ['always']
+  roles:
+    # - role: geerlingguy.mac.homebrew
+    #   tags: ['homebrew']
+    # - role: dotfiles
+    # - role: iterm2
+    # - role: macports
+    # - role: terraform
+    # - role: homebrew
+    # - role: oh-my-zsh
+    # - role: ssh-key
+    # - role: dotfiles
+    # - role: vscode-extensions

@@ -1,0 +1,32 @@
+---
+- name: determine user
+  set_fact:
+    oh_my_zsh_user: "{{ oh_my_zsh_user | default(ansible_user_id) }}"
+    oh_my_zsh_group: "{{ oh_my_zsh_group | default(ansible_user_gid) }}"
+
+- name: install oh-my-zsh
+  git:
+    repo: "{{ oh_my_zsh_repo }}"
+    version: master
+    dest: "{{ oh_my_zsh_install_path }}"
+    update: false
+    depth: 1
+  become: true
+  become_user: "{{ oh_my_zsh_user }}"
+# - name: create .zshrc
+#   copy:
+#     src: "{{ oh_my_zsh_install_path }}/templates/zshrc.zsh-template"
+#     dest: "~/.zshrc"
+#     owner: "{{ oh_my_zsh_user }}"
+#     group: "{{ oh_my_zsh_group }}"
+#     mode: '0644'
+
+- name: install theme
+  git:
+    repo: "{{ oh_my_zsh_theme_repo }}"
+    version: master
+    dest: "{{ oh_my_zsh_custom_theme_path }}"
+    # update: false
+    depth: 1
+  become: true
+  become_user: "{{ oh_my_zsh_user }}"

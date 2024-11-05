@@ -1,0 +1,8 @@
+---
+- name: install extensions
+  command: "code --install-extension '{{ item }}'"
+  with_items: "{{ vscode_extensions }}"
+  register: vscode_extensions_result
+  changed_when: "'already installed' not in vscode_extensions_result.stdout"
+  become: yes
+  become_user: "{{ ansible_user_id }}"

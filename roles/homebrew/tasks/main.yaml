@@ -1,0 +1,86 @@
+---
+- name: Determine Homebrew ownership variables
+  set_fact:
+    homebrew_user: "{{ homebrew_user | default(ansible_user_id) }}"
+    homebrew_group: "{{ homebrew_group | default(ansible_user_gid) }}"
+
+- name: Ensure Homebrew directory exists.
+  file:
+    path: "{{ homebrew_install_path }}"
+    owner: "{{ homebrew_user }}"
+    group: "{{ homebrew_group }}"
+    state: directory
+    mode: 0775
+  become: true
+
+- name: install homebrew
+  git:
+    repo: "{{ homebrew_repo }}"
+    version: master
+    dest: "{{ homebrew_install_path }}"
+    update: false
+    depth: 1
+  become: true
+  become_user: "{{ homebrew_user }}"
+
+- name: Check if homebrew binary is already in place.
+  stat: "path={{ homebrew_brew_bin }}"
+  register: homebrew_binary
+  check_mode: false
+
+- name: Ensure proper homebrew folders are in place.
+  file:
+    path: "{{ homebrew_install_path }}/{{ item }}"
+    state: directory
+    owner: "{{ homebrew_user }}"
+    group: "{{ homebrew_group }}"
+  become: true
+  loop: "{{ homebrew_folders_base }}"
+
+# - name: zprofile
+#   file:
+#     path: "{{ ansible_env.HOME }}/.zprofile2"
+#     state: file
+#   become: true
+- name: path
+  lineinfile:
+    dest: "{{ ansible_env.HOME }}/.zprofile"
+    create: true
+    line: 'eval "$({{ homebrew_brew_bin }} shellenv)"'
+  # when: not homebrew_binary.stat.exists
+
+# - name: path
+#   command: "echo 'eval \"$(/opt/homebrew/bin/brew shellenv)\"' >> $HOME/.zprofile"
+
+# - name: Force update brew after installation.
+#   command: "{{ homebrew_brew_bin }} update --force"
+#   when: not homebrew_binary.stat.exists
+
+- name: Ensure configured taps are tapped.
+  homebrew_tap:
+    tap: "{{ item.name | default(item) }}"
+    url: "{{ item.url | default(omit) }}"
+    state: present
+  loop: "{{ homebrew_taps }}"
+  # become: true
+  become_user: "{{ homebrew_user }}"
+
+- name: Install configured cask applications.
+  homebrew_cask:
+    name: "{{ item.name | default(item) }}"
+    state: present
+    install_options: "{{ item.install_options | default('appdir=' + homebrew_cask_appdir) }}"
+    # accept_external_apps: true
+    # sudo_password: "{{ ansible_become_password | default(omit) }}"
+  loop: "{{ homebrew_cask_apps }}"
+  # become: true
+  become_user: "{{ homebrew_user }}"
+
+- name: Ensure configured homebrew packages are installed.
+  community.general.homebrew:
+    name: "{{ item.name | default(item) }}"
+    state: "{{ item.state | default('present') }}"
+    install_options: "{{ item.install_options | default(omit) }}"
+  loop: "{{ homebrew_installed_packages }}"
+  # become: true
+  become_user: "{{ homebrew_user }}"
