@@ -12,14 +12,34 @@
         - "{{ playbook_dir }}/config.yml"
       tags: ['always']
   roles:
-    # - role: geerlingguy.mac.homebrew
-    #   tags: ['homebrew']
+    - role: geerlingguy.mac.homebrew
+      tags: ['homebrew']
+    # - role: aws_cli
+    # - role: default
     # - role: dotfiles
-    - role: iterm2
-    # - role: macports
-    # - role: terraform
+    # - role: emacs
+    # - role: gnu_parallel
     # - role: homebrew
+    # - role: install_fonts_from_archive
+    # - role: install_from_dmg
+    # - role: iterm2
+    # - role: iterm2_shell_integration
+    # - role: launchd_load
+    # - role: launchd_unload
+    # - role: macos_version
+    # - role: macports
+    # - role: mactex
+    # - role: mount_dmg
+    # - role: ngrok
+    # - role: node
     # - role: oh-my-zsh
+    # - role: postman
+    # - role: r_app
+    # - role: settings
     # - role: ssh-key
-    # - role: dotfiles
-    # - role: vscode-extensions
+    # - role: steamcmd
+    # - role: terraform
+    # - role: unmount_dmg
+    - role: vscode-extensions
+    - role: xact
+    - role: xcode_firstlaunch
