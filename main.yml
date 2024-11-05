@@ -4,7 +4,14 @@
 
   vars_files:
     - default.config.yml
-
+    - vars/const.yml
+    - vars/dmgs.yml
+    - vars/fonts.yml
+    - vars/launchd.yml
+    - vars/mas.yml
+    - vars/pip.yml
+    - vars/ports.yml
+    - vars/version.yml
   pre_tasks:
     - name: Include playbook configuration.
       include_vars: "{{ item }}"
@@ -15,15 +22,15 @@
     # - role: geerlingguy.mac.homebrew
     # tags: ['homebrew']
     # - role: aws_cli
-    - role: default
+    # - role: default
     # - role: dotfiles
     # - role: emacs
     # - role: gnu_parallel
     # - role: homebrew
     # - role: install_fonts_from_archive
     # - role: install_from_dmg
-    - role: iterm2
-    - role: iterm2_shell_integration
+    # - role: iterm2
+    # - role: iterm2_shell_integration
     # - role: launchd_load
     # - role: launchd_unload
     # - role: macos_version
@@ -40,6 +47,6 @@
     # - role: steamcmd
     # - role: terraform
     # - role: unmount_dmg
-    - role: vscode-extensions
-    - role: xact
-    - role: xcode_firstlaunch
+    # - role: vscode-extensions
+    # - role: xact
+    # - role: xcode_firstlaunch

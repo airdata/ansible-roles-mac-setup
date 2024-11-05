@@ -56,7 +56,6 @@
     version: master
     depth: 1
     update: false
-  become: true
   become_user: "{{ user_id }}"
 
 - name: Check if Homebrew binary is in place.
