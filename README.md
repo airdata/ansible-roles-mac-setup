@@ -8,7 +8,10 @@
         This is my personal macOS setup using Ansible and will be updating it as I go along.
                           (Currently compatible for macOS Sonoma 14.0)
 [![Update badges](https://github.com/airdata/ansible-roles-mac-setup/actions/workflows/add-badges.yml/badge.svg?branch=main)](https://github.com/airdata/ansible-roles-mac-setup/actions/workflows/add-badges.yml)
-#
+[![Integration and Tests](https://github.com/airdata/ansible-roles-mac-setup/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/airdata/ansible-roles-mac-setup/actions/workflows/ci.yml)
+![git-size](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/wiki/peterrhodesdev/build-a-badge/git-size.md)
+![git-file-count](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/wiki/peterrhodesdev/build-a-badge/git-file-count.md)
+
 # Option 1: Ansible macOS setup automatic
 
 Tested on Monterey. Requires python3. Only supports intel macs for now.

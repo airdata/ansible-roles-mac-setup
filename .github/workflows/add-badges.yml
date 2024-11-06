@@ -1,15 +1,43 @@
-name: Update badges
-
+name: Create git badges
 on:
   push:
     branches:
       - main
 jobs:
-  update-readme:
-    name: Update Readme with badges
+  git-badges:
+    name: git badges
     runs-on: ubuntu-latest
     steps:
-      - name: Badges - Readme
-        uses: pemtajo/badge-readme@main
+      - name: Check out repo with all history
+        uses: actions/checkout@v3
         with:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          fetch-depth: 0
+      - name: Output git info
+        id: git_info
+        run: |
+          function format_size { echo $(numfmt --to iec --suffix B $1); }
+          function format_number { LC_ALL=en_US.UTF-8 printf "%'d\n" $1; }
+          echo "file_count=$(format_number $(git ls-files | wc -l))" >> $GITHUB_OUTPUT
+          echo "last_commit_date=$(git log -1 --format=%cd)" >> $GITHUB_OUTPUT
+          echo "latest_release=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
+          echo "commits_to_main=$(format_number $(git rev-list --count main))" >> $GITHUB_OUTPUT
+          git gc
+          echo "size=$(format_size $(($(git count-objects -v | grep 'size-pack: ' | sed 's/size-pack: //g' | tr -d '\n') * 1024)))" >> $GITHUB_OUTPUT
+        shell: bash
+      - name: Build-A-Badge
+        uses: peterrhodesdev/build-a-badge@v1.3.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          filename: |
+            (
+              "git-size"
+              "git-file-count"
+            )
+          label: ("size" "files")
+          message: |
+            (
+              "${{ steps.git_info.outputs.size }}"
+              "${{ steps.git_info.outputs.file_count }}"
+            )
+          namedLogo: ("git" "git")
+          color: ("f1502f" "35bdf1")
