@@ -1,54 +1,76 @@
-name: Add Badges
-on:
-  push:
-    branches:
-      - main
+# SPDX-FileCopyrightText: Simon Schneegans <code@simonschneegans.de>
+# SPDX-License-Identifier: CC0-1.0
+
+name: Build Badges
+
+on: [push]
+
 jobs:
-  run:
+  answer-badge:
+    name: Create Answer Badge
     runs-on: ubuntu-latest
     steps:
-      - uses: wow-actions/add-badges@v1
-        env:
-          repo_url: ${{ github.event.repository.html_url }}
-          repo_name: ${{ github.event.repository.name }}
-          repo_owner: ${{ github.event.repository.owner.login }}
+      - name: Get the Numbers
+        run: echo "ANSWER=42" >> $GITHUB_ENV
+      - name: Create the Badge
+        uses: schneegans/dynamic-badges-action@master
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          center: true
-          badges: |
-            [
-              [
-                {
-                  "badge": "https://img.shields.io/github/license/${{ env.repo_owner }}/${{ env.repo_name }}?style=flat-square",
-                  "alt": "MIT License",
-                  "link": "${{ env.repo_url }}/blob/master/LICENSE"
-                },
-                {
-                  "badge": "https://img.shields.io/badge/language-TypeScript-blue.svg?style=flat-square",
-                  "alt": "Language",
-                  "link": "https://www.typescriptlang.org"
-                },
-                {
-                  "badge": "https://img.shields.io/badge/PRs-Welcome-brightgreen.svg?style=flat-square",
-                  "alt": "PRs Welcome",
-                  "link": "${{ env.repo_url }}/pulls"
-                },
-                {
-                  "badge": "https://img.shields.io/static/v1?label=&labelColor=505050&message=marketplace&color=0076D6&style=flat-square&logo=google-chrome&logoColor=0076D6",
-                  "alt": "website",
-                  "link": "https://github.com/marketplace/actions/${{ env.repo_name }}"
-                }
-              ],
-              [
-                {
-                  "badge": "https://img.shields.io/github/workflow/status/${{ env.repo_owner }}/${{ env.repo_name }}/Release/master?logo=github&style=flat-square",
-                  "alt": "build",
-                  "link": "${{ env.repo_url }}/actions/workflows/release.yml"
-                },
-                {
-                  "badge": "https://img.shields.io/lgtm/grade/javascript/g/${{ env.repo_owner }}/${{ env.repo_name }}.svg?logo=lgtm&style=flat-square",
-                  "alt": "Language grade: JavaScript",
-                  "link": "https://lgtm.com/projects/g/${{ env.repo_owner }}/${{ env.repo_name }}/context:javascript"
-                }
-              ]
-            ]
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: 730fbbd7d28f0d2f4d7af089b2a97419
+          filename: answer.json
+          label: The Answer
+          message: is ${{ env.ANSWER }}
+          valColorRange: ${{ env.ANSWER }}
+          maxColorRange: 100
+          minColorRange: 0
+
+  svg-badge:
+    name: Create SVG Badge
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create the Badge
+        uses: schneegans/dynamic-badges-action@master
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: 730fbbd7d28f0d2f4d7af089b2a97419
+          filename: badge.svg
+          label: This is
+          message: an SVG badge
+          color: red
+          labelColor: blue
+
+  color-range-badges:
+    name: "Create Color Range Badges"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        total:
+          - 0
+          - 10
+          - 20
+          - 30
+          - 40
+          - 50
+          - 60
+          - 70
+          - 80
+          - 90
+          - 100
+    steps:
+      - name: "Stagger"
+        run: |
+          # Gist returns 500 if we try to update many files in the same gist all at once.
+          # Thanks to Ned Batchelder for this idea!
+          # https://nedbatchelder.com/blog/202209/making_a_coverage_badge.html
+          sleep $( expr ${{ matrix.total }} / 10 )
+      - name: "Make badge"
+        uses: schneegans/dynamic-badges-action@master
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: 730fbbd7d28f0d2f4d7af089b2a97419
+          filename: color_badge_${{ matrix.total }}.json
+          label: Coverage
+          message: ${{ matrix.total }}%
+          minColorRange: 50
+          maxColorRange: 90
+          valColorRange: ${{ matrix.total }}
