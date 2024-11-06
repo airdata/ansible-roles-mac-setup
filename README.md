@@ -5,12 +5,12 @@
   <img width="140" src="./images/ansible.png">
 </p>
 
-        This is my personal macOS setup using Ansible and will be updating it as I go along. 
+        This is my personal macOS setup using Ansible and will be updating it as I go along.
                           (Currently compatible for macOS Sonoma 14.0)
 
 #
-<!--START_SECTION:badges-->
-<!--END_SECTION:badges-->
+<!-- [START BADGES] -->
+<!-- [END BADGES] -->
 # Option 1: Ansible macOS setup automatic
 
 Tested on Monterey. Requires python3. Only supports intel macs for now.
@@ -44,7 +44,7 @@ Install XCode. (The command line tools are insufficient. python3 seems to be una
 1. Sign in to the app store app.
    `mas` cannot install apps unless you do so, and sign in via the command line no longer works.
    See [mas known issues](https://github.com/mas-cli/mas#%EF%B8%8F-known-issues).
-1. Run `setup.sh -K` (omit `-K` if you're set up with passwordless `sudo`). The script passes all 
+1. Run `setup.sh -K` (omit `-K` if you're set up with passwordless `sudo`). The script passes all
 arguments on to `ansible-playbook`.
 1. The following `tags` are defined (which you can pass to the script, e.g., `setup.sh --tags ports`):
     - **apps**:      Install applications from the app store using `mas` and from non-app-store disk images
@@ -176,30 +176,30 @@ ansible-playbook main.yaml --ask-become-pass
 | left-aligned | $16 |
 | centered   |   $12 |
 | right-aligned |    $1 |
-| default       | $16 |        
-| dotfiles       | $16 |      
-| emacs       | $16 |          
-| gnu_parallel  | $16 |      
-| homebrew  | $16 |      
-| install_from_dmg  | $16 |      
-| iterm2  | $16 |      
-| iterm2_shell_integration  | $16 |      
-| launchd_load  | $16 |      
-| launchd_unload  | $16 |      
-| macos_version  | $16 |      
-| macports  | $16 |      
-| mactex  | $16 |      
-| mount_dmg  | $16 |      
-| ngrok  | $16 |      
-| node  | $16 |      
-| oh-my-zsh  | $16 |      
-| postman  | $16 |      
-| r_app  | $16 |      
-| settings  | $11 |      
-| ssh-key  | $11ff |      
-| steamcmd  | $11as |      
-| terraform  | $11as |      
-| unmount_dmg  | $16 |      
-| vscode-extensions  | $16 |      
-| xact  | $16 |      
-| xcode_firstlaunch  | $16 |      
+| default       | $16 |
+| dotfiles       | $16 |
+| emacs       | $16 |
+| gnu_parallel  | $16 |
+| homebrew  | $16 |
+| install_from_dmg  | $16 |
+| iterm2  | $16 |
+| iterm2_shell_integration  | $16 |
+| launchd_load  | $16 |
+| launchd_unload  | $16 |
+| macos_version  | $16 |
+| macports  | $16 |
+| mactex  | $16 |
+| mount_dmg  | $16 |
+| ngrok  | $16 |
+| node  | $16 |
+| oh-my-zsh  | $16 |
+| postman  | $16 |
+| r_app  | $16 |
+| settings  | $11 |
+| ssh-key  | $11ff |
+| steamcmd  | $11as |
+| terraform  | $11as |
+| unmount_dmg  | $16 |
+| vscode-extensions  | $16 |
+| xact  | $16 |
+| xcode_firstlaunch  | $16 |
