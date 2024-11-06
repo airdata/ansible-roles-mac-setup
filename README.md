@@ -9,8 +9,10 @@
                           (Currently compatible for macOS Sonoma 14.0)
 
 #
-<!-- [START BADGES] -->
-<!-- [END BADGES] -->
+![git-size](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/wiki/peterrhodesdev/build-a-badge/git-size.md)
+![git-file-count](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/wiki/peterrhodesdev/build-a-badge/git-file-count.md)
+![git-last-commit-date](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/wiki/peterrhodesdev/build-a-badge/git-last-commit-date.md)
+![git-commits-to-main](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/wiki/peterrhodesdev/build-a-badge/git-commits-to-main.md)
 # Option 1: Ansible macOS setup automatic
 
 Tested on Monterey. Requires python3. Only supports intel macs for now.

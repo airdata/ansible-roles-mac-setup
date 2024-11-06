@@ -1,76 +1,44 @@
-# SPDX-FileCopyrightText: Simon Schneegans <code@simonschneegans.de>
-# SPDX-License-Identifier: CC0-1.0
-
-name: Build Badges
-
+name: Create git badges
 on: [push]
-
 jobs:
-  answer-badge:
-    name: Create Answer Badge
+  git-badges:
+    name: git badges
     runs-on: ubuntu-latest
     steps:
-      - name: Get the Numbers
-        run: echo "ANSWER=42" >> $GITHUB_ENV
-      - name: Create the Badge
-        uses: schneegans/dynamic-badges-action@master
+      - name: Check out repo with all history
+        uses: actions/checkout@v3
         with:
-          auth: ${{ secrets.GIST_SECRET }}
-          gistID: 730fbbd7d28f0d2f4d7af089b2a97419
-          filename: answer.json
-          label: The Answer
-          message: is ${{ env.ANSWER }}
-          valColorRange: ${{ env.ANSWER }}
-          maxColorRange: 100
-          minColorRange: 0
-
-  svg-badge:
-    name: Create SVG Badge
-    runs-on: ubuntu-latest
-    steps:
-      - name: Create the Badge
-        uses: schneegans/dynamic-badges-action@master
-        with:
-          auth: ${{ secrets.GIST_SECRET }}
-          gistID: 730fbbd7d28f0d2f4d7af089b2a97419
-          filename: badge.svg
-          label: This is
-          message: an SVG badge
-          color: red
-          labelColor: blue
-
-  color-range-badges:
-    name: "Create Color Range Badges"
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        total:
-          - 0
-          - 10
-          - 20
-          - 30
-          - 40
-          - 50
-          - 60
-          - 70
-          - 80
-          - 90
-          - 100
-    steps:
-      - name: "Stagger"
+          fetch-depth: 0
+      - name: Output git info
+        id: git_info
         run: |
-          # Gist returns 500 if we try to update many files in the same gist all at once.
-          # Thanks to Ned Batchelder for this idea!
-          # https://nedbatchelder.com/blog/202209/making_a_coverage_badge.html
-          sleep $( expr ${{ matrix.total }} / 10 )
-      - name: "Make badge"
-        uses: schneegans/dynamic-badges-action@master
+          function format_size { echo $(numfmt --to iec --suffix B $1); }
+          function format_number { LC_ALL=en_US.UTF-8 printf "%'d\n" $1; }
+          echo "file_count=$(format_number $(git ls-files | wc -l))" >> $GITHUB_OUTPUT
+          echo "last_commit_date=$(git log -1 --format=%cd)" >> $GITHUB_OUTPUT
+          echo "latest_release=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
+          echo "commits_to_main=$(format_number $(git rev-list --count main))" >> $GITHUB_OUTPUT
+          git gc
+          echo "size=$(format_size $(($(git count-objects -v | grep 'size-pack: ' | sed 's/size-pack: //g' | tr -d '\n') * 1024)))" >> $GITHUB_OUTPUT
+        shell: bash
+      - name: Build-A-Badge
+        uses: peterrhodesdev/build-a-badge@v1.3.1
         with:
-          auth: ${{ secrets.GIST_SECRET }}
-          gistID: 730fbbd7d28f0d2f4d7af089b2a97419
-          filename: color_badge_${{ matrix.total }}.json
-          label: Coverage
-          message: ${{ matrix.total }}%
-          minColorRange: 50
-          maxColorRange: 90
-          valColorRange: ${{ matrix.total }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          filename: |
+            (
+              "git-size"
+              "git-file-count"
+              "git-last-commit-date"
+              "git-commits-to-main"
+            )
+          label: ("size" "files" "last commit" "latest release" "commits to main")
+          message: |
+            (
+              "${{ steps.git_info.outputs.size }}"
+              "${{ steps.git_info.outputs.file_count }}"
+              "${{ steps.git_info.outputs.last_commit_date }}"
+              "${{ steps.git_info.outputs.commits_to_main }}"
+            )
+          namedLogo: ("git" "git" "git" "git")
+          color: ("f1502f" "f1502f" "f1502f" "f1502f")
