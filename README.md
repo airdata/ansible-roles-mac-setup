@@ -9,7 +9,8 @@
                           (Currently compatible for macOS Sonoma 14.0)
 
 #
-
+<!-- [START BADGES] -->
+<!-- [END BADGES] -->
 # Option 1: Ansible macOS setup automatic
 
 Tested on Monterey. Requires python3. Only supports intel macs for now.
