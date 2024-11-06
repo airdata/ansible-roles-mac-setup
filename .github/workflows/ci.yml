@@ -1,5 +1,5 @@
 ---
-name: CI
+name: Integration and Tests
 
 on:
   push:
