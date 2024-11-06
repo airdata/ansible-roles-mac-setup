@@ -4,14 +4,13 @@ on:
     branches:
       - main
 jobs:
-  git-badges:
-    name: git badges
+  badge:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - name: ReadMe Badge
-        uses: kevinfjiang/coverage-badge@v1
+      - name: badge
+        uses: doapply/action-badge@2.1.0
         with:
-          # Code coverage as a percentage in range [0, 100]
-          coverage: 25
-          # Color of badge
+          badge_id: ${{ secrets.badge_ID }}
 
