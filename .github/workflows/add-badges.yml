@@ -8,36 +8,20 @@ jobs:
     name: git badges
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repo with all history
-        uses: actions/checkout@v3
+      - name: ReadMe Badge
+        # You may pin to the exact commit or the version.
+        # uses: kevinfjiang/coverage-badge@900b3e111b9df2350995cb7ef70842e243c60e89
+        uses: kevinfjiang/coverage-badge@v1
         with:
-          fetch-depth: 0
-      - name: Output git info
-        id: git_info
-        run: |
-          function format_size { echo $(numfmt --to iec --suffix B $1); }
-          function format_number { LC_ALL=en_US.UTF-8 printf "%'d\n" $1; }
-          echo "file_count=$(format_number $(git ls-files | wc -l))" >> $GITHUB_OUTPUT
-          echo "last_commit_date=$(git log -1 --format=%cd)" >> $GITHUB_OUTPUT
-          echo "latest_release=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
-          echo "commits_to_main=$(format_number $(git rev-list --count main))" >> $GITHUB_OUTPUT
-          git gc
-          echo "size=$(format_size $(($(git count-objects -v | grep 'size-pack: ' | sed 's/size-pack: //g' | tr -d '\n') * 1024)))" >> $GITHUB_OUTPUT
-        shell: bash
-      - name: Build-A-Badge
-        uses: peterrhodesdev/build-a-badge@v1.3.1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          filename: |
-            (
-              "git-size"
-              "git-file-count"
-            )
-          label: ("size" "files")
-          message: |
-            (
-              "${{ steps.git_info.outputs.size }}"
-              "${{ steps.git_info.outputs.file_count }}"
-            )
-          namedLogo: ("git" "git")
-          color: ("f1502f" "35bdf1")
+          # Code coverage as a percentage in range [0, 100]
+          coverage: 
+          # Color of badge
+          color: # optional, default is 
+          # Markdown files to be modified and has the tags  <!-- Coverage Comment:Begin -->/,/<!-- Coverage Comment:End -->
+          change_file: # optional, default is 
+          # shields.io style of the badge
+          style: # optional, default is for-the-badge
+          # GitHub Action token
+          repo_token: # optional, default is ${{ github.token }}
+          # Branch to commit onto
+          ref: # optional, default is ${{ github.head_ref }}

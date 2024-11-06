@@ -205,6 +205,7 @@ ansible-playbook main.yaml --ask-become-pass
 | xact  | $16 |
 | xcode_firstlaunch  | $16 |
 
+<!-- Coverage Comment:Begin -->/,/<!-- Coverage Comment:End -->
 
 <!--START_SECTION:badges-->
 <!--END_SECTION:badges-->
