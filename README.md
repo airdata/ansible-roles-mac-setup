@@ -205,3 +205,8 @@ ansible-playbook main.yaml --ask-become-pass
 | vscode-extensions  | $16 |
 | xact  | $16 |
 | xcode_firstlaunch  | $16 |
+
+
+
+<!--START_SECTION:badges-->
+<!--END_SECTION:badges-->
