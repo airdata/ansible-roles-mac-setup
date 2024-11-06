@@ -27,7 +27,6 @@
     # - role: emacs
     # - role: gnu_parallel
     # - role: homebrew
-    # - role: install_fonts_from_archive
     # - role: install_from_dmg
     # - role: iterm2
     # - role: iterm2_shell_integration

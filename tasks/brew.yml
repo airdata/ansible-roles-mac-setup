@@ -56,7 +56,7 @@
     version: master
     depth: 1
     update: false
-  become_user: "{{ user_id }}"
+  become: true
 
 - name: Check if Homebrew binary is in place.
   stat: "path={{ homebrew_path_prefix }}/bin/brew"

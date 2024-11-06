@@ -1,5 +1,7 @@
 ---
-- import_playbook: bootstrap-playbook.yml
+
+- name: Import
+  ansible.builtin.import_playbook: bootstrap-playbook.yml
 
 - name: Setup
   hosts: localhost
@@ -63,7 +65,8 @@
         - dotfiles
 
     - name: Check out dotfiles
-      command: "git --git-dir={{ '~/.cfg' | expanduser }} --work-tree={{ '~' | expanduser }} checkout"
+      ansible.builtin.command:
+        cmd: "git --git-dir={{ '~/.cfg' | expanduser }} --work-tree={{ '~' | expanduser }} checkout"
       tags:
         - dotfiles
 
@@ -95,14 +98,3 @@
     - import_tasks: tasks/ssh_setup.yml
       tags:
         - dotfiles
-
-    - include_role:
-        name: install_fonts_from_archive
-        apply:
-          tags:
-            - fonts
-      vars:
-        font_archive_url: "{{ item }}"
-      loop: "{{ font_archives }}"
-      tags:
-        - fonts

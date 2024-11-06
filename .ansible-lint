@@ -1,5 +1,17 @@
 ---
+exclude_paths:
+  - .idea/
+  - .cache/
+  - tasks/
+  - roles/
+
+enable_list:
+  - no-log-password
+
 skip_list:
+  - git-latest
+  - meta-no-info
+  - unnamed-task
   - schema[meta]
   - role-name
   - experimental
@@ -7,3 +19,5 @@ skip_list:
   - name[missing]
   - no-changed-when
   - risky-file-permissions
+  - command-instead-of-module
+  - schema[playbook]
