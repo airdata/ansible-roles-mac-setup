@@ -1,9 +1,11 @@
 ---
 name: Close inactive issues
-'on':
+on:
+  push:
+    branches:
+      - main
   schedule:
-    - cron: "55 18 * * 4"  # semi-random time
-
+    - cron: "0 5 * * 4"
 jobs:
   close-issues:
     runs-on: ubuntu-latest
