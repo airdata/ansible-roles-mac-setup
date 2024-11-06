@@ -9,19 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ReadMe Badge
-        # You may pin to the exact commit or the version.
-        # uses: kevinfjiang/coverage-badge@900b3e111b9df2350995cb7ef70842e243c60e89
         uses: kevinfjiang/coverage-badge@v1
         with:
           # Code coverage as a percentage in range [0, 100]
-          coverage: 
+          coverage: 25
           # Color of badge
-          color: # optional, default is 
-          # Markdown files to be modified and has the tags  <!-- Coverage Comment:Begin -->/,/<!-- Coverage Comment:End -->
-          change_file: # optional, default is 
-          # shields.io style of the badge
-          style: # optional, default is for-the-badge
-          # GitHub Action token
-          repo_token: # optional, default is ${{ github.token }}
-          # Branch to commit onto
-          ref: # optional, default is ${{ github.head_ref }}
+
