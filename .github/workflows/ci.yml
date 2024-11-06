@@ -1,5 +1,5 @@
 ---
-name: CI
+name: Integration and Tests
 
 on:
   push:
@@ -36,7 +36,7 @@ jobs:
       matrix:
         os:
           - macos-12
-          - macos-11
+#          - macos-11
 
     steps:
       - name: Check out the codebase
