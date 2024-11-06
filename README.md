@@ -16,8 +16,6 @@
 
 # Option 1: Ansible macOS setup automatic
 
-Tested on Monterey. Requires python3. Only supports intel macs for now.
-
 ### Prerequisites
 
 Install XCode. (The command line tools are insufficient. python3 seems to be unable to verify ssl certificates without the full app).
