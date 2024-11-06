@@ -1,16 +1,16 @@
-name: Create git badges
+---
+name: Update badges
+
 on:
   push:
     branches:
       - main
 jobs:
-  badge:
+  update-readme:
+    name: Update Readme with badges
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
-      - name: badge
-        uses: doapply/action-badge@2.1.0
+      - name: Badges - Readme
+        uses: pemtajo/badge-readme@main
         with:
-          badge_id: ${{ secrets.badge_ID }}
-
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
