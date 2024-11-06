@@ -15,8 +15,8 @@ jobs:
     steps:
       - uses: actions/stale@v8
         with:
-          days-before-stale: 120
-          days-before-close: 60
+          days-before-stale: 4
+          days-before-close: 2
           exempt-issue-labels: bug,pinned,security,planned
           exempt-pr-labels: bug,pinned,security,planned
           stale-issue-label: "stale"
