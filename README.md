@@ -1,16 +1,18 @@
 # macOS setup via Ansible
 
 <p align="center">
-  <img width="200" src="./images/sonoma.png">
-  <img width="140" src="./images/ansible.png">
+  <img width="220" src="./images/sonoma.png">
+  <img width="160" src="./images/ansible.png">
 </p>
 
         This is my personal macOS setup using Ansible and will be updating it as I go along.
                           (Currently compatible for macOS Sonoma 14.0)
-[![Update badges](https://github.com/airdata/ansible-roles-mac-setup/actions/workflows/add-badges.yml/badge.svg?branch=main)](https://github.com/airdata/ansible-roles-mac-setup/actions/workflows/add-badges.yml)
-[![Integration and Tests](https://github.com/airdata/ansible-roles-mac-setup/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/airdata/ansible-roles-mac-setup/actions/workflows/ci.yml)
-![git-size](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/wiki/peterrhodesdev/build-a-badge/git-size.md)
-![git-file-count](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/wiki/peterrhodesdev/build-a-badge/git-file-count.md)
+#
+
+  [![Integration and Tests](https://github.com/airdata/ansible-roles-mac-setup/actions/workflows/ci.yml/badge.svg?event=push)](https://github.com/airdata/ansible-roles-mac-setup/actions/workflows/ci.yml)
+  [![Update badges](https://github.com/airdata/ansible-roles-mac-setup/actions/workflows/add-badges.yml/badge.svg)](https://github.com/airdata/ansible-roles-mac-setup/actions/workflows/add-badges.yml)
+  ![git-size](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/wiki/peterrhodesdev/build-a-badge/git-size.md)
+  ![git-file-count](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/wiki/peterrhodesdev/build-a-badge/git-file-count.md)
 
 # Option 1: Ansible macOS setup automatic
 
@@ -204,8 +206,3 @@ ansible-playbook main.yaml --ask-become-pass
 | vscode-extensions  | $16 |
 | xact  | $16 |
 | xcode_firstlaunch  | $16 |
-
-<!-- Coverage Comment:Begin -->/,/<!-- Coverage Comment:End -->
-
-<!--START_SECTION:badges-->
-<!--END_SECTION:badges-->
