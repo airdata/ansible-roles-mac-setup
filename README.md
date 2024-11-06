@@ -167,3 +167,38 @@ ansible-playbook main.yaml --ask-become-pass
 - iterm colors
 - zsh theme
 - zprofile
+
+# ROLES
+
+| Role   |      Price      |
+|----------|:-------------:|
+| left-aligned | $16 |
+| centered   |   $12 |
+| right-aligned |    $1 |
+| default       | $16 |        
+| dotfiles       | $16 |      
+| emacs       | $16 |          
+| gnu_parallel  | $16 |      
+| homebrew  | $16 |      
+| install_from_dmg  | $16 |      
+| iterm2  | $16 |      
+| iterm2_shell_integration  | $16 |      
+| launchd_load  | $16 |      
+| launchd_unload  | $16 |      
+| macos_version  | $16 |      
+| macports  | $16 |      
+| mactex  | $16 |      
+| mount_dmg  | $16 |      
+| ngrok  | $16 |      
+| node  | $16 |      
+| oh-my-zsh  | $16 |      
+| postman  | $16 |      
+| r_app  | $16 |      
+| settings  | $11 |      
+| ssh-key  | $11ff |      
+| steamcmd  | $11as |      
+| terraform  | $11as |      
+| unmount_dmg  | $16 |      
+| vscode-extensions  | $16 |      
+| xact  | $16 |      
+| xcode_firstlaunch  | $16 |      
