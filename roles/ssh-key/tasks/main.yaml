@@ -1,0 +1,21 @@
+---
+- name: generate ssh key
+  user:
+    name: "{{ ansible_user_id }}"
+    generate_ssh_key: yes
+    ssh_key_type: ed25519
+    ssh_key_file: ~/.ssh/id_ed25519
+    ssh_key_comment: "{{ ansible_user_id }}@{{ ansible_hostname }}"
+    force: no
+  register: ssh_key_user
+
+# - name: Print the gateway for each host when defined
+#   ansible.builtin.debug:
+#     msg: Set password for ssh key using 'ssh-keygen -p -f ~/.ssh/id_ed25519'
+
+- name: github
+  local_action:
+    module: github_key
+    name: "{{ ansible_hostname }}"
+    token: "{{ ssh_key_github_access_token }}"
+    pubkey: "{{ ssh_key_user.ssh_public_key }}"

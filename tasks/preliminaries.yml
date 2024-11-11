@@ -1,0 +1,19 @@
+# Ensure common directories are in place.
+---
+- set_fact:
+    downloads: "{{ '~/Downloads/setup' | expanduser }}"
+
+- name: Ensure downloads directory exists
+  file:
+    path: "{{ downloads }}"
+    state: directory
+    mode: u=rwx
+
+- name: Ensure ~/var directories exist
+  file:
+    path: "{{ '~/var' | expanduser }}/{{ item }}"
+    state: directory
+    mode: u=rwx
+  loop:
+    - run
+    - log

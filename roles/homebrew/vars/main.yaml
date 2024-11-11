@@ -1,0 +1,17 @@
+---
+homebrew_folders_base:
+  - bin
+  - etc
+  - include
+  - lib
+  - sbin
+  - share
+  - var
+  - opt
+  - share/zsh
+  - share/zsh/site-functions
+  - var/homebrew
+  - var/homebrew/linked
+  - Cellar
+  - Caskroom
+  - Frameworks

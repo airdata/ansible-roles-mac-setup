@@ -1,0 +1,6 @@
+---
+oh_my_zsh_repo: https://github.com/robbyrussell/oh-my-zsh
+oh_my_zsh_install_path: "~/.oh-my-zsh"
+
+oh_my_zsh_theme_repo: "https://github.com/romkatv/powerlevel10k.git"
+oh_my_zsh_custom_theme_path: "{{ oh_my_zsh_install_path }}/custom/themes/powerlevel10k"

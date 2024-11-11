@@ -1,0 +1,19 @@
+# Customize macOS and app settings.
+---
+- include_role:
+    name: settings
+    apply:
+      tags:
+        - customize
+  tags:
+    - customize
+
+- name: Show ~/Library
+  command: chflags nohidden "{{ '~/Library' | expanduser }}"
+  tags:
+    - customize
+
+- name: No, really, show ~/Library
+  command: SetFile -a v "{{ '~/Library' | expanduser }}"
+  tags:
+    - customize

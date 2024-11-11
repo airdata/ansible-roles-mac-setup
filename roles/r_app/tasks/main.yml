@@ -1,0 +1,19 @@
+# Install the R app.
+---
+- stat:
+    path: /Applications/R.app
+  register: throwaway
+  when: not r_app_force_install
+
+- when: r_app_force_install or not (throwaway.stat.isdir is defined and throwaway.stat.isdir)
+  block:
+    - name: Download R package
+      get_url:
+        url: "https://cran.r-project.org/bin/macosx/big-sur-x86_64/base/R-{{ r_app_version }}-{{ ansible_machine }}.pkg"
+        dest: "{{ downloads }}/R.pkg"
+        force: "{{ r_app_force_download }}"
+        mode: u=rw
+
+    - name: Install R
+      command: "installer -pkg {{ downloads }}/R.pkg -target /"
+      become: true

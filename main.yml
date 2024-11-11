@@ -1,0 +1,51 @@
+---
+- name: Configure host.
+  hosts: all
+
+  vars_files:
+    - default.config.yml
+    - vars/const.yml
+    - vars/dmgs.yml
+    - vars/fonts.yml
+    - vars/launchd.yml
+    - vars/mas.yml
+    - vars/pip.yml
+    - vars/ports.yml
+    - vars/version.yml
+  pre_tasks:
+    - name: Include playbook configuration.
+      include_vars: "{{ item }}"
+      with_fileglob:
+        - "{{ playbook_dir }}/config.yml"
+      tags: ['always']
+  roles:
+    # - role: geerlingguy.mac.homebrew
+    # tags: ['homebrew']
+    # - role: aws_cli
+    # - role: default
+    # - role: dotfiles
+    # - role: emacs
+    # - role: gnu_parallel
+    # - role: homebrew
+    # - role: install_from_dmg
+    # - role: iterm2
+    # - role: iterm2_shell_integration
+    # - role: launchd_load
+    # - role: launchd_unload
+    # - role: macos_version
+    # - role: macports
+    # - role: mactex
+    # - role: mount_dmg
+    # - role: ngrok
+    # - role: node
+    # - role: oh-my-zsh
+    # - role: postman
+    # - role: r_app
+    # - role: settings
+    # - role: ssh-key
+    # - role: steamcmd
+    # - role: terraform
+    # - role: unmount_dmg
+    # - role: vscode-extensions
+    # - role: xact
+    # - role: xcode_firstlaunch

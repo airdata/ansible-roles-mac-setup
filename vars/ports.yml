@@ -1,0 +1,75 @@
+---
+# List of ports that must be installed in bootstrap.
+bootstrap_ports_to_install:
+    mas:
+
+# List of ports with optional variants _not_ installed in bootstrap.
+ports_to_install:
+    autoconf:
+    bash:
+    bash-completion:
+#    bat:  # messes up less, so no good.
+    bison:
+    coreutils:
+    cowsay:
+    editorconfig-core-c:
+    flex:
+    gawk: +mpfr
+    gmake:
+    gmp: +native
+    gradle:
+    gradle-completion:
+# Graphviz
+    # Graphviz requires this to build, apparently, but doesn't install it first.
+    swig-python:
+    # Install this explicitly first. It seems like graphviz is applying its own variants to this dependency,
+    # leading to massive failure later on.
+    librsvg: +quartz
+    graphviz: +guile +pangocairo +poppler +rsvg +x11
+    graphviz-gui:
+# End Graphviz
+    gwhich:
+    gzip:
+    htop:
+    hunspell:
+    ImageMagick: +graphviz +pango +svrg +wmf +x11
+    # needed for native json support in emacs.
+    jansson:
+    jq:
+    lesspipe:
+    multimarkdown:
+    maven3:
+    poppler:
+    postgresql12:
+    postgresql14:
+    pstree:
+    python310: +optimizations
+    py310-pip:
+    ripgrep:
+    shellcheck:
+    siege:
+    tealdeer:
+    texinfo:
+    the_silver_searcher:
+    tidy:
+    trash:
+    tree:
+    # Required for new emacs parsing fanciness.
+    tree-sitter:
+    util-linux:
+    watch:
+    wget: +gnutls
+    zsh:
+    zsh-completions:
+# Work
+    aws-vault:
+    ffmpeg: +nonfree +x11 +gpl3
+    portaudio:
+    redis:
+    sox:
+# End Work.
+
+# Mapping of port group to specific implementation to select.
+ports_to_select:
+    maven: maven3
+    postgresql: postgresql12

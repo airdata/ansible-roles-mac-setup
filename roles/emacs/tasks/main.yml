@@ -1,0 +1,61 @@
+---
+- name: Clone emacs
+  git:
+    repo: https://github.com/emacs-mirror/emacs
+    dest: "{{ emacs_src_dir }}"
+    force: false # discard build-aux/config.{sub,guess}
+
+- name: Run make extraclean
+  command: /opt/local/bin/gmake extraclean
+  args:
+    chdir: "{{ emacs_src_dir }}"
+  when: emacs_extraclean and not emacs_distclean
+
+# make bootstrap is sometimes necessary. See INSTALL.REPO and
+# https://lists.gnu.org/archive/html/emacs-devel/2019-11/msg00630.html
+- name: Bootstrap emacs
+  command: /opt/local/bin/gmake bootstrap
+  args:
+    chdir: "{{ emacs_src_dir }}"
+  when: emacs_bootstrap
+
+- name: Generate configure script
+  command: ./autogen.sh
+  args:
+    chdir: "{{ emacs_src_dir }}"
+  when: not emacs_bootstrap  # bootstrap runs autogen.
+
+# Standalone step can fail with "New Mach-O header is too large to relocate" without LDFLAGS.
+# https://py2app.readthedocs.io/en/latest/faq.html
+# Vaguely related: https://ylluminarious.github.io/2019/06/13/how-i-solved-a-cryptic-emacs-dumping-error/
+# Interestingly, configure will fail if LDFLAGS is set via LDFLAGS=... ./configure, or if it's done via
+# `environment:` on ansible's command module.
+- name: Configure emacs
+  shell: |-
+    export LDFLAGS=-Wl,-headerpad_max_install_names
+    ./configure
+  args:
+    chdir: "{{ emacs_src_dir }}"
+
+- name: Build emacs
+  command: /opt/local/bin/gmake install
+  args:
+    chdir: "{{ emacs_src_dir }}"
+
+- name: Create app's Frameworks directory (for standalone app libraries)
+  file:
+    path: "{{ emacs_src_dir }}/nextstep/Emacs.app/Contents/Frameworks"
+    state: directory
+    mode: u=rwx,g=rx,o=rx
+
+# From a handy tip here
+# https://www.reddit.com/r/emacs/comments/bclyyc/building_emacs_from_source_on_macos/
+- name: Make emacs standalone
+  command: /usr/bin/python3 -m macholib standalone nextstep/Emacs.app
+  args:
+    chdir: "{{ emacs_src_dir }}"
+
+- name: Copy emacs to /Applications
+  command: cp -af nextstep/Emacs.app /Applications/
+  args:
+    chdir: "{{ emacs_src_dir }}"
